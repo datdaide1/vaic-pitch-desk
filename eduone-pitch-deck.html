@@ -159,11 +159,11 @@ h3{font-size:clamp(14px,1.42vw,19px);line-height:1.22;font-weight:750}
       <div class="hero-note">
         <span class="label gold-label">MVP chạy trên dữ liệu mô phỏng</span>
         <span class="label" style="background:rgba(255,255,255,.12);color:#fff">FastAPI + React + SQLite</span>
-        <span class="label" style="background:rgba(255,255,255,.12);color:#fff">21 unit test + 3 verify script</span>
+        <span class="label" style="background:rgba(255,255,255,.12);color:#fff">Compiler · Radar · Mascot AI</span>
       </div>
       <div class="hint">← → / Space để điều hướng · F toàn màn hình · P in PDF</div>
     </div>
-    <div class="source"><span>Phạm vi trình bày: các năng lực đang chạy trong MVP hackathon.</span><span class="slide-no">01 / 14</span></div>
+    <div class="source"><span>Phạm vi trình bày: các năng lực đang chạy trong MVP hackathon.</span><span class="slide-no">01 / 15</span></div>
   </div>
 </section>
 
@@ -179,7 +179,7 @@ h3{font-size:clamp(14px,1.42vw,19px);line-height:1.22;font-weight:750}
       <div class="metric"><strong>1 + 10</strong><span>một nhân sự full-time và 10 tình nguyện viên làm nội dung</span></div>
     </div>
     <div class="panel gold-panel"><p class="body"><b>Tiêu chí giải pháp:</b> cá nhân hóa theo bằng chứng học tập, tăng tốc sản xuất nội dung bằng AI và giữ quyền xuất bản ở giáo viên.</p></div>
-    <div class="source"><span>Nguồn: E:\VAIC\problem-brief\STEAM_for_Vietnam_EduOne_ProblemBrief.docx</span><span class="slide-no">02 / 14</span></div>
+    <div class="source"><span>Nguồn: E:\VAIC\problem-brief\STEAM_for_Vietnam_EduOne_ProblemBrief.docx</span><span class="slide-no">02 / 15</span></div>
   </div>
 </section>
 
@@ -209,7 +209,7 @@ h3{font-size:clamp(14px,1.42vw,19px);line-height:1.22;font-weight:750}
         <div class="action"><b>Hành động MVP:</b> phục vụ bài remedial gần nhất theo skill và yêu cầu hoàn thành checkpoint trước khi mở bài tiếp.</div>
       </div>
     </div>
-    <div class="source"><span>Minh / An / Linh là persona mô phỏng dùng trong demo. Nguồn: E:\VAIC\docs\prd.md §4.</span><span class="slide-no">03 / 14</span></div>
+    <div class="source"><span>Minh / An / Linh là persona mô phỏng dùng trong demo. Nguồn: E:\VAIC\docs\prd.md §4.</span><span class="slide-no">03 / 15</span></div>
   </div>
 </section>
 
@@ -230,7 +230,7 @@ h3{font-size:clamp(14px,1.42vw,19px);line-height:1.22;font-weight:750}
       <div class="outcome body"><b>Người học:</b> nhận đúng hỗ trợ tại thời điểm kẹt.</div>
       <div class="outcome body"><b>Giáo viên:</b> biết bài nào cần soạn trước để giúp nhiều người nhất.</div>
     </div>
-    <div class="source"><span>Luồng đang chạy: event → mastery → rule → serve; content draft → validate → review → approve.</span><span class="slide-no">04 / 14</span></div>
+    <div class="source"><span>Luồng đang chạy: event → mastery → rule → serve; content draft → validate → review → approve.</span><span class="slide-no">04 / 15</span></div>
   </div>
 </section>
 
@@ -262,14 +262,45 @@ h3{font-size:clamp(14px,1.42vw,19px);line-height:1.22;font-weight:750}
           <li><span class="dot">✓</span><span>Mọi đề xuất kèm evidence, rule và mức tin cậy.</span></li>
           <li><span class="dot">✓</span><span>MVP có banner nhẹ và gate bắt buộc theo severity; serve 3 bậc từ kho seed/published.</span></li>
           <li><span class="dot">✓</span><span>Hoàn thành remedial sẽ cập nhật gate và mở lại node học tập theo rule.</span></li>
+          <li><span class="dot">✓</span><span>Trả lời sai checkpoint giữa bài → mascot gợi ý ngắn 2–3 câu, không lộ đáp án; mất kết nối AI vẫn có câu động viên fallback.</span></li>
+          <li><span class="dot">✓</span><span>Mở khóa bài tiếp theo tính theo điểm mastery của skill, không đếm số câu đúng tuyệt đối.</span></li>
         </ul>
       </div>
     </div>
-    <div class="source"><span>Luồng demo: submit → mastery → rule → gate → serve → complete trên lesson seed.</span><span class="slide-no">05 / 14</span></div>
+    <div class="source"><span>Luồng demo: submit → mastery → rule → gate → serve → complete trên lesson seed.</span><span class="slide-no">05 / 15</span></div>
   </div>
 </section>
 
-<!-- 06 · DECISION ENGINE -->
+<!-- 06 · STUDENT TOOLS -->
+<section class="slide" data-title="Student tools">
+  <div class="frame">
+    <div class="kicker">Vừa thêm · công cụ &amp; gắn kết học viên</div>
+    <h2>Trình biên dịch Python trực tiếp, radar kỹ năng và mascot phản hồi cảm xúc</h2>
+    <div class="cols wide-left">
+      <div class="panel">
+        <span class="label green">Compiler · WebSocket real-time</span>
+        <p class="body" style="margin-top:10px">Học viên viết và chạy Python ngay trong trình duyệt, có ô nhập <code>input()</code>, terminal stream trực tiếp qua WebSocket.</p>
+        <ul class="bullets small" style="margin-top:10px">
+          <li><span class="dot">✓</span><span>Sandbox chặn <code>os/subprocess/socket/ctypes</code>, chặn <code>eval/exec</code> và ghi file.</span></li>
+          <li><span class="dot">✓</span><span>Timeout 10 giây/lần chạy; mỗi lần chạy là một subprocess riêng, không giữ state giữa các lần.</span></li>
+          <li><span class="dot">✓</span><span>Không tính vào mastery — đây là sân chơi tự do, tách khỏi đường ra quyết định.</span></li>
+        </ul>
+      </div>
+      <div class="panel gold-panel">
+        <span class="label gold-label">Gắn kết &amp; phản hồi tức thời</span>
+        <div class="quality-stack" style="margin-top:10px">
+          <div class="quality"><span class="qicon">R</span><p class="body"><b>Radar kỹ năng:</b> gom mastery theo topic, bấm vào từng trục để xem chi tiết skill.</p></div>
+          <div class="quality"><span class="qicon">M</span><p class="body"><b>Mascot 6 trạng thái:</b> idle/hype/celebrate/cheer/scared/sad, đổi theo hành vi làm bài.</p></div>
+          <div class="quality"><span class="qicon">H</span><p class="body"><b>Hint AI tại checkpoint:</b> gọi DeepSeek khi trả lời sai, chỉ gợi ý khái niệm, không đưa đáp án.</p></div>
+        </div>
+        <p class="small muted" style="margin-top:10px">Nội dung học cũng vừa được làm giàu: 61 bài seed, error_pattern cho các bài convert từ eduai-platform đã được gán tự động (<code>scripts/assign_error_patterns.py</code>), chờ giáo viên duyệt lại trước pilot.</p>
+      </div>
+    </div>
+    <div class="source"><span>Vừa merge 19/07/2026 (routers/checkpoints.py, services/checkpoint_hint.py, RadarChart.tsx, compiler.tsx) — chưa chạy lại verify script sau đợt này.</span><span class="slide-no">06 / 15</span></div>
+  </div>
+</section>
+
+<!-- 07 · DECISION ENGINE -->
 <section class="slide" data-title="Decision engine">
   <div class="frame">
     <div class="kicker">Cơ chế ra quyết định</div>
@@ -297,13 +328,14 @@ h3{font-size:clamp(14px,1.42vw,19px);line-height:1.22;font-weight:750}
         <div class="rule-row small"><b>Score ≥ 0,7</b><span class="arrow">→</span><span>Đi tiếp, không recommendation</span></div>
         <div class="rule-row small"><b>0,4 ≤ score &lt; 0,7</b><span class="arrow">→</span><span>Banner đề xuất, không bắt buộc</span></div>
         <div class="rule-row small"><b>Score &lt; 0,4</b><span class="arrow">→</span><span>Gate bắt buộc + remedial từ serve pool</span></div>
+        <div class="rule-row small"><b>Node tiếp theo</b><span class="arrow">→</span><span>Mở khóa theo ngưỡng mastery của skill, không đếm số câu đúng tuyệt đối</span></div>
       </div>
     </div>
-    <div class="source"><span>Nguồn triển khai: E:\VAIC\docs\ARCHITECTURE.md §3.4, §5.3.</span><span class="slide-no">06 / 14</span></div>
+    <div class="source"><span>Nguồn triển khai: E:\VAIC\docs\ARCHITECTURE.md §3.4, §5.3.</span><span class="slide-no">07 / 15</span></div>
   </div>
 </section>
 
-<!-- 07 · TEACHER EXPERIENCE -->
+<!-- 08 · TEACHER EXPERIENCE -->
 <section class="slide" data-title="Teacher experience">
   <div class="frame">
     <div class="kicker">Trải nghiệm giáo viên</div>
@@ -331,11 +363,11 @@ h3{font-size:clamp(14px,1.42vw,19px);line-height:1.22;font-weight:750}
         <p class="body" style="margin-top:12px"><b>Kết quả:</b> draft được duyệt trở thành nội dung published và tham gia serve pool theo skill.</p>
       </div>
     </div>
-    <div class="source"><span>Heatmap minh họa từ 20 persona mô phỏng. Nguồn triển khai: E:\VAIC\docs\ARCHITECTURE.md §5.1.</span><span class="slide-no">07 / 14</span></div>
+    <div class="source"><span>Heatmap minh họa từ 20 persona mô phỏng. Nguồn triển khai: E:\VAIC\docs\ARCHITECTURE.md §5.1.</span><span class="slide-no">08 / 15</span></div>
   </div>
 </section>
 
-<!-- 08 · CONTENT SAFETY -->
+<!-- 09 · CONTENT SAFETY -->
 <section class="slide" data-title="Content safety">
   <div class="frame">
     <div class="kicker">Human-in-the-loop by design</div>
@@ -354,14 +386,14 @@ h3{font-size:clamp(14px,1.42vw,19px);line-height:1.22;font-weight:750}
           <div class="quality"><span class="qicon">H</span><p class="body"><b>Human-owned:</b> AI không có quyền publish; mọi bản sửa có version và người duyệt.</p></div>
           <div class="quality"><span class="qicon">F</span><p class="body"><b>Fallback:</b> lỗi parse/validate/network → retry 1 lần → dùng draft fallback.</p></div>
         </div>
-        <div class="panel dark-panel" style="margin-top:10px;padding:13px"><p class="small"><b style="color:var(--gold)">Publish boundary:</b> nội dung không qua validator hoặc chưa có giáo viên duyệt sẽ không được phục vụ cho người học.</p></div>
+        <div class="panel dark-panel" style="margin-top:10px;padding:13px"><p class="small"><b style="color:var(--gold)">Publish boundary:</b> nội dung không qua validator hoặc chưa có giáo viên duyệt sẽ không được phục vụ cho người học. 54 bài convert từ eduai-platform vừa được gán error_pattern tự động bằng script, đang chờ giáo viên duyệt lại trước pilot thật.</p></div>
       </div>
     </div>
-    <div class="source"><span>Guardrail đang chạy: E:\VAIC\docs\ARCHITECTURE.md §5.1, §5.4.</span><span class="slide-no">08 / 14</span></div>
+    <div class="source"><span>Guardrail đang chạy: E:\VAIC\docs\ARCHITECTURE.md §5.1, §5.4.</span><span class="slide-no">09 / 15</span></div>
   </div>
 </section>
 
-<!-- 09 · ARCHITECTURE -->
+<!-- 10 · ARCHITECTURE -->
 <section class="slide" data-title="Architecture">
   <div class="frame">
     <div class="kicker">Kiến trúc MVP đang chạy</div>
@@ -375,7 +407,7 @@ h3{font-size:clamp(14px,1.42vw,19px);line-height:1.22;font-weight:750}
       <div class="layer">
         <span class="layer-no">02</span><h3>FastAPI service</h3>
         <p class="body">Submit transaction: chấm → mastery → rules → gate → serve → rec log. Generation on-demand trong cùng process.</p>
-        <div class="tags"><span class="tag">CPU critical path</span><span class="tag">Claude tùy chọn</span><span class="tag">fallback</span></div>
+        <div class="tags"><span class="tag">CPU critical path</span><span class="tag">Claude tùy chọn</span><span class="tag">fallback</span><span class="tag">WS compiler sandbox</span></div>
       </div>
       <div class="layer">
         <span class="layer-no">03</span><h3>SQLite + seed</h3>
@@ -388,11 +420,11 @@ h3{font-size:clamp(14px,1.42vw,19px);line-height:1.22;font-weight:750}
       <div class="metric" style="padding:12px 16px"><strong style="font-size:clamp(18px,2vw,27px)">3 portal · 14 trang</strong><span>Học viên, giáo viên và admin trong cùng React bundle.</span></div>
       <div class="metric" style="padding:12px 16px"><strong style="font-size:clamp(18px,2vw,27px)">10 bảng SQLite</strong><span>Seed, reset và audit phục vụ demo lặp lại được.</span></div>
     </div>
-    <div class="source"><span>Nguồn triển khai: E:\VAIC\docs\ARCHITECTURE.md §1–§6.</span><span class="slide-no">09 / 14</span></div>
+    <div class="source"><span>Nguồn triển khai: E:\VAIC\docs\ARCHITECTURE.md §1–§6.</span><span class="slide-no">10 / 15</span></div>
   </div>
 </section>
 
-<!-- 10 · WORKING EVIDENCE -->
+<!-- 11 · WORKING EVIDENCE -->
 <section class="slide" data-title="Working evidence">
   <div class="frame">
     <div class="kicker">Bằng chứng MVP</div>
@@ -424,15 +456,15 @@ h3{font-size:clamp(14px,1.42vw,19px);line-height:1.22;font-weight:750}
       </div>
     </div>
     <div class="metric-band" style="grid-template-columns:repeat(3,1fr)">
-      <div class="metric" style="padding:12px 16px"><strong style="font-size:clamp(20px,2.2vw,30px)">21/21</strong><span>unit test vừa chạy xanh</span></div>
+      <div class="metric" style="padding:12px 16px"><strong style="font-size:clamp(20px,2.2vw,30px)">23</strong><span>unit test viết cho engine — đang re-verify sau đợt merge 19/07</span></div>
       <div class="metric" style="padding:12px 16px"><strong style="font-size:clamp(20px,2.2vw,30px)">3 script</strong><span>verify M1 / M2 / M4</span></div>
-      <div class="metric" style="padding:12px 16px"><strong style="font-size:clamp(20px,2.2vw,30px)">&gt;60 lesson</strong><span>kho lesson JSON hiện có</span></div>
+      <div class="metric" style="padding:12px 16px"><strong style="font-size:clamp(20px,2.2vw,30px)">61 lesson</strong><span>kho lesson JSON hiện có</span></div>
     </div>
-    <div class="source"><span>Nguồn triển khai: ARCHITECTURE.md §3–§6. Pytest chạy lại ngày 19/07/2026: 21 passed.</span><span class="slide-no">10 / 14</span></div>
+    <div class="source"><span>Nguồn triển khai: ARCHITECTURE.md §3–§6. Đợt merge checkpoint-hint 19/07 đổi router; cần chạy lại pytest + verify script trước khi công bố kết quả pass/fail mới.</span><span class="slide-no">11 / 15</span></div>
   </div>
 </section>
 
-<!-- 11 · LIVE DEMO -->
+<!-- 12 · LIVE DEMO -->
 <section class="slide" data-title="Demo scope">
   <div class="frame">
     <div class="kicker">Demo 3 phút · đúng phạm vi MVP</div>
@@ -448,11 +480,11 @@ h3{font-size:clamp(14px,1.42vw,19px);line-height:1.22;font-weight:750}
       <div class="panel"><p class="body"><b>Learner loop:</b> submit → mastery → explanation → gate → remedial → complete.</p></div>
       <div class="panel gold-panel"><p class="body"><b>Content loop:</b> heatmap → generate → validate → review → approve → serve pool.</p></div>
     </div>
-    <div class="source"><span>Repo verify: scripts\verify\verify_m1.sh, verify_m2.sh, verify_m4.sh.</span><span class="slide-no">11 / 14</span></div>
+    <div class="source"><span>Repo verify: scripts\verify\verify_m1.sh, verify_m2.sh, verify_m4.sh.</span><span class="slide-no">12 / 15</span></div>
   </div>
 </section>
 
-<!-- 12 · AUDIT TRAIL -->
+<!-- 13 · AUDIT TRAIL -->
 <section class="slide" data-title="Audit trail">
   <div class="frame">
     <div class="kicker">Bằng chứng vận hành</div>
@@ -466,7 +498,7 @@ h3{font-size:clamp(14px,1.42vw,19px);line-height:1.22;font-weight:750}
     <div class="panel gold-panel">
       <p class="small muted" style="text-transform:uppercase;letter-spacing:.1em;font-weight:850;margin-bottom:8px">Proof points trong repo</p>
       <div class="targets">
-        <div class="target"><strong>21/21</strong><span class="tiny">unit test passed</span></div>
+        <div class="target"><strong>23</strong><span class="tiny">unit test (đang re-verify)</span></div>
         <div class="target"><strong>3</strong><span class="tiny">verify script</span></div>
         <div class="target"><strong>14</strong><span class="tiny">trang trong 3 portal</span></div>
         <div class="target"><strong>10</strong><span class="tiny">bảng SQLite</span></div>
@@ -474,13 +506,13 @@ h3{font-size:clamp(14px,1.42vw,19px);line-height:1.22;font-weight:750}
     </div>
     <div class="cols" style="flex:0 0 auto">
       <p class="small"><b>Dữ liệu demo:</b> 20 persona mô phỏng có lịch sử học tập khác nhau.</p>
-      <p class="small"><b>Kho nội dung:</b> hơn 60 lesson JSON được nạp theo skill graph.</p>
+      <p class="small"><b>Kho nội dung:</b> 61 lesson JSON được nạp theo skill graph 10 topic / 12 skill.</p>
     </div>
-    <div class="source"><span>Nguồn triển khai: E:\VAIC\docs\ARCHITECTURE.md §3–§6; pytest ngày 19/07/2026.</span><span class="slide-no">12 / 14</span></div>
+    <div class="source"><span>Nguồn triển khai: E:\VAIC\docs\ARCHITECTURE.md §3–§6; skill-graph.json $meta v0.2.</span><span class="slide-no">13 / 15</span></div>
   </div>
 </section>
 
-<!-- 13 · DIFFERENTIATION -->
+<!-- 14 · DIFFERENTIATION -->
 <section class="slide" data-title="Differentiation">
   <div class="frame">
     <div class="kicker">Điểm khác biệt của MVP</div>
@@ -492,11 +524,11 @@ h3{font-size:clamp(14px,1.42vw,19px);line-height:1.22;font-weight:750}
       <div class="road"><time>04 · REPLENISH</time><h3>Bổ sung đúng chỗ</h3><p class="body">Demand counter dẫn AI tới skill cần nội dung; giáo viên duyệt trước publish.</p><p class="small muted" style="margin-top:auto"><b>Output:</b> kho nội dung tự đầy dần.</p></div>
     </div>
     <div class="panel dark-panel"><p class="body"><b style="color:var(--gold)">Thiết kế cốt lõi:</b> critical path của người học chạy bằng CPU và nội dung đã duyệt; LLM chỉ tham gia quy trình soạn nội dung phía giáo viên.</p></div>
-    <div class="source"><span>Nguồn triển khai: E:\VAIC\docs\ARCHITECTURE.md §3–§5.</span><span class="slide-no">13 / 14</span></div>
+    <div class="source"><span>Nguồn triển khai: E:\VAIC\docs\ARCHITECTURE.md §3–§5.</span><span class="slide-no">14 / 15</span></div>
   </div>
 </section>
 
-<!-- 14 · CLOSE -->
+<!-- 15 · CLOSE -->
 <section class="slide dark" data-title="Close">
   <div class="frame center">
     <div class="ask-grid reveal" style="z-index:1">
@@ -517,7 +549,7 @@ h3{font-size:clamp(14px,1.42vw,19px);line-height:1.22;font-weight:750}
       </div>
     </div>
     <img class="mascot" src="assets/celebrate.gif" alt="Linh vật EduOne chúc mừng" style="position:absolute;right:2.2%;bottom:6%;width:clamp(75px,9vw,130px);z-index:1">
-    <div class="source"><span>EduOne Adaptive Learning Engine · Vietnam AI Innovation Challenge 2026</span><span class="slide-no">14 / 14</span></div>
+    <div class="source"><span>EduOne Adaptive Learning Engine · Vietnam AI Innovation Challenge 2026</span><span class="slide-no">15 / 15</span></div>
   </div>
 </section>
 

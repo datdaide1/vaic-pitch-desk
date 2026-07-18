@@ -215,7 +215,50 @@ table.cmp td.us{background:#fff8e1;font-weight:700;color:var(--primary)}
   <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
 </div>
 
-<!-- ============ SLIDE 6 · CONTENT STUDIO ============ -->
+<!-- ============ SLIDE 6 · MASTERY ENGINE ============ -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Bước 1 · Đo năng lực thật</div>
+    <h2 class="headline">Engine không chỉ hỏi đúng hay sai — nó đo <span style="color:var(--primary)">cách học</span></h2>
+    <div class="split">
+      <div>
+        <div class="codebox">// Mỗi submission trở thành một tín hiệu học tập giải thích được<br>s = <span class="k">0.4</span>·correctness + <span class="k">0.2</span>·attempt + <span class="k">0.2</span>·time + <span class="k">0.2</span>·hint<br><br>&nbsp;&nbsp;correctness = tỉ lệ đúng các item thuộc skill<br>&nbsp;&nbsp;attempt&nbsp;&nbsp;&nbsp;&nbsp; = 1/số_lần_thử&nbsp;&nbsp;<span class="s">(lần 1 → 1.0, lần 2 → 0.5)</span><br>&nbsp;&nbsp;time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = <span class="s">0.3 nếu nhanh bất thường — nghi đoán mò</span><br>&nbsp;&nbsp;hint&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 1 − 0.25·số_gợi_ý&nbsp;&nbsp;<span class="s">(floor 0)</span><br><br>mastery_new = <span class="k">0.7</span>·mastery_old + <span class="k">0.3</span>·s&nbsp;&nbsp;<span class="s">// EWMA</span></div>
+        <p class="tiny muted" style="margin-top:8px">Cold-start: chưa đủ 5 mẫu median lớp → không phạt time_factor. Trend so với 5 submission gần nhất (up / flat / down).</p>
+      </div>
+      <div>
+        <ul class="check-list animate-stagger">
+          <li><span class="ck">✓</span><p class="small"><b>Nhận ra Minh đang học thật:</b> lỗi giảm dần qua các lần chạy code vẫn được ghi nhận, kể cả khi chưa pass.</p></li>
+          <li><span class="ck">✓</span><p class="small"><b>Không để An “mua” mastery bằng đoán mò:</b> đúng nhưng nhanh bất thường → time_factor 0.3, gần như không cộng điểm.</p></li>
+          <li><span class="ck">✓</span><p class="small"><b>Thấy Linh cần giảm tải:</b> nhiều hint và thời gian dài là tín hiệu để đổi cách giải thích, không phải lý do để bỏ em lại.</p></li>
+          <li><span class="ck">✓</span><p class="small"><b>Không black-box:</b> mỗi con số trên UI truy ngược được về event + công thức; BKT chỉ bật sau khi được calibrate bằng dữ liệu pilot.</p></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
+</div>
+
+<!-- ============ SLIDE 7 · RULE ENGINE & GATE ============ -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Bước 2 · Quyết định can thiệp</div>
+    <h2 class="headline">Mỗi tín hiệu học tập dẫn đến một hành động <span style="color:var(--primary)">giải thích được</span></h2>
+    <div class="split">
+      <div style="display:flex;flex-direction:column;gap:clamp(8px,1.2vh,13px)">
+        <div class="codebox">// Decision rules — hàm thuần, deterministic, &lt;20ms<br><span class="k">R1</span>: ≥3 hint trong 1 lesson&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ banner bài bổ trợ<br><span class="k">R2</span>: chậm &gt;2× median lớp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ banner visualize<br><span class="k">R3</span>: sai ≥3/5 item cùng skill&nbsp;&nbsp;&nbsp;→ remedial / gate<br><span class="k">R7</span>: chapter_test dưới ngưỡng&nbsp;&nbsp;&nbsp;→ gate cuối chương<br><br><span class="s">// Ưu tiên R3/R7 &gt; R1 &gt; R2 — không rule nào gọi LLM</span></div>
+        <div class="card"><p class="small">📏 <b>Can thiệp đúng mức:</b> score ≥ 0.7 → đi tiếp · 0.4–0.7 → gợi ý bài ngắn, không bắt buộc · &lt; 0.4 → gate + bài chữa dài tương xứng. Checkpoint giữa bài không phạt sai.</p></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:clamp(8px,1.2vh,13px)">
+        <div class="card" style="background:#fff8e1;border-color:var(--gold)"><p class="small">💬 <b>Học viên luôn biết “vì sao”:</b></p><p class="tiny" style="margin-top:6px;font-style:italic;background:var(--surface);border-radius:8px;padding:8px">"Em sai 4/6 câu về Câu lệnh lặp while; dùng 3 gợi ý. → Hoàn thành bài ôn điều kiện dừng để mở bài tiếp."</p><p class="tiny muted" style="margin-top:6px">Kèm evidence + rule_id + confidence — hiển thị cho học viên và lưu Recommendation Log để audit.</p></div>
+        <div class="card"><p class="small">⚡ <b>Học viên không bao giờ chờ:</b> ① bài chữa đúng lỗi trong pool đã duyệt → ② bài gần nhất cùng skill → ③ ôn tập tổng hợp từ backbone.</p></div>
+        <div class="card"><p class="small">🔁 <b>Vòng quyết định tin cậy:</b> đo (EWMA) → quyết định (rules) → nội dung (pool đã duyệt). LLM chỉ sinh nháp offline, không đứng trên đường ra quyết định.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
+</div>
+
+<!-- ============ SLIDE 8 · CONTENT STUDIO ============ -->
 <div class="slide">
   <div class="slide-content">
     <div class="kicker">Trải nghiệm giáo viên</div>
@@ -236,7 +279,7 @@ table.cmp td.us{background:#fff8e1;font-weight:700;color:var(--primary)}
   <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
 </div>
 
-<!-- ============ SLIDE 7 · KIẾN TRÚC CHI PHÍ ============ -->
+<!-- ============ SLIDE 9 · KIẾN TRÚC CHI PHÍ ============ -->
 <div class="slide">
   <div class="slide-content">
     <div class="kicker">Kiến trúc</div>
@@ -259,7 +302,7 @@ table.cmp td.us{background:#fff8e1;font-weight:700;color:var(--primary)}
   <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
 </div>
 
-<!-- ============ SLIDE 8 · EXPLAINABLE & AN TOÀN ============ -->
+<!-- ============ SLIDE 10 · EXPLAINABLE & AN TOÀN ============ -->
 <div class="slide">
   <div class="slide-content">
     <div class="kicker">AI giải thích được — không black-box</div>
@@ -282,7 +325,7 @@ table.cmp td.us{background:#fff8e1;font-weight:700;color:var(--primary)}
   <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
 </div>
 
-<!-- ============ SLIDE 9 · COMPETITOR ============ -->
+<!-- ============ SLIDE 11 · COMPETITOR ============ -->
 <div class="slide">
   <div class="slide-content">
     <div class="kicker">Cạnh tranh</div>
@@ -301,10 +344,10 @@ table.cmp td.us{background:#fff8e1;font-weight:700;color:var(--primary)}
   <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
 </div>
 
-<!-- ============ SLIDE 10 · TRACTION ============ -->
+<!-- ============ SLIDE 12 · TRACTION ============ -->
 <div class="slide">
   <div class="slide-content">
-    <div class="kicker">Không phải slide — bằng chứng chạy thật</div>
+    <div class="kicker">MVP hiện tại · Bằng chứng chạy thật</div>
     <h2 class="headline">Kiểm chứng bằng máy, không tin lời nói</h2>
     <div class="grid-4 animate-stagger">
       <div class="card" style="text-align:center"><div class="metric-num" style="color:var(--success)">13/13</div><p class="small" style="margin-top:4px"><b>unit test xanh</b><br><span class="tiny muted">+ 3 verify script diễn nguyên kịch bản học viên, assert từng con số</span></p></div>
@@ -323,10 +366,10 @@ table.cmp td.us{background:#fff8e1;font-weight:700;color:var(--primary)}
   <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
 </div>
 
-<!-- ============ SLIDE 11 · PILOT & METRICS ============ -->
+<!-- ============ SLIDE 13 · PILOT & METRICS ============ -->
 <div class="slide">
   <div class="slide-content">
-    <div class="kicker">Pilot cùng EduOne</div>
+    <div class="kicker">Bước kế tiếp · Pilot cùng EduOne</div>
     <h2 class="headline">Đo bằng số, không đo bằng cảm giác</h2>
     <div class="split">
       <div style="display:flex;flex-direction:column;gap:clamp(8px,1.2vh,13px)">
@@ -345,10 +388,10 @@ table.cmp td.us{background:#fff8e1;font-weight:700;color:var(--primary)}
   <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
 </div>
 
-<!-- ============ SLIDE 12 · MOAT + ROADMAP ============ -->
+<!-- ============ SLIDE 14 · MOAT + ROADMAP ============ -->
 <div class="slide">
   <div class="slide-content">
-    <div class="kicker">Tầm nhìn</div>
+    <div class="kicker">Tầm nhìn · Mở rộng sau khi chứng minh MVP</div>
     <h2 class="headline">Từ một lớp học đến một <span style="color:var(--primary)">hệ điều hành giáo dục</span></h2>
     <div class="timeline animate-stagger">
       <div class="phase now"><span class="ph-n">P1 · Prove</span><p class="tiny">MVP live + pilot đối chứng 4 tuần. Bằng chứng gate giúp chứ không đuổi học viên.</p></div>
@@ -366,7 +409,7 @@ table.cmp td.us{background:#fff8e1;font-weight:700;color:var(--primary)}
   <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
 </div>
 
-<!-- ============ SLIDE 13 · CLOSING ============ -->
+<!-- ============ SLIDE 15 · CLOSING ============ -->
 <div class="slide dark">
   <div class="slide-content" style="align-items:center;text-align:center">
     <img class="mascot" src="assets/celebrate.gif" alt="OctoCode celebrate" style="width:clamp(100px,13vw,180px)">
@@ -385,7 +428,7 @@ table.cmp td.us{background:#fff8e1;font-weight:700;color:var(--primary)}
 
 <div class="nav-controls">
   <button class="nav-btn" onclick="prevSlide()">←</button>
-  <span class="slide-counter"><span id="current">1</span> / <span id="total">13</span></span>
+  <span class="slide-counter"><span id="current">1</span> / <span id="total">15</span></span>
   <button class="nav-btn" onclick="nextSlide()">→</button>
 </div>
 

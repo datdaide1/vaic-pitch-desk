@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduOne Adaptive Learning Engine — Pitch Deck · VAIC 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --background:#f7fafd; --surface:#ffffff; --surface-low:#f1f4f7;
+  --foreground:#181c1e; --muted:#5b6470;
+  --primary:#7c5800; --gold:#ffb800; --on-gold:#4a3600;
+  --navy:#1f2a3d; --secondary:#4e5f7d; --secondary-container:#cadaff;
+  --tertiary:#994700; --tertiary-container:#ffb487;
+  --accent:#2563eb; --success:#1b7f4d; --warning:#b45309; --destructive:#ba1a1a; --destructive-container:#ffdad6;
+  --border:#e3e9f2; --shadow:0 4px 16px rgba(31,42,61,.10);
+  --font-head:'Montserrat',sans-serif; --font-body:'Inter',sans-serif; --font-code:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#e9eef4;color:var(--foreground);font-family:var(--font-body);overflow:hidden}
+.slide-deck{position:relative;width:100vw;height:100vh;overflow:hidden}
+@media (min-width:769px){
+  .slide-deck{max-width:calc(100vh*16/9);max-height:calc(100vw*9/16);margin:auto;position:absolute;inset:0;box-shadow:0 8px 40px rgba(31,42,61,.18)}
+}
+.slide{position:absolute;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:3.2% 4.5%;opacity:0;visibility:hidden;transition:opacity .4s;background:var(--background);overflow:hidden}
+.slide.active{opacity:1;visibility:visible}
+.slide-content{width:100%;max-width:100%;max-height:100%;display:flex;flex-direction:column;justify-content:center;gap:clamp(10px,1.6vh,20px)}
+.slide.dark{background:var(--navy);color:#fff}
+.slide.dark .muted{color:#aeb9cc}
+
+h1,h2,h3{font-family:var(--font-head)}
+.kicker{font-family:var(--font-body);font-size:clamp(10px,1.15vw,14px);font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--primary)}
+.slide.dark .kicker{color:var(--gold)}
+.headline{font-size:clamp(22px,3vw,40px);font-weight:700;line-height:1.15;letter-spacing:-0.01em}
+.display{font-size:clamp(30px,4.6vw,62px);font-weight:800;line-height:1.08;letter-spacing:-0.02em}
+.gold-text{background:linear-gradient(100deg,#ffb800,#ffd35c);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.muted{color:var(--muted)}
+.lead{font-size:clamp(13px,1.5vw,19px);line-height:1.55}
+.small{font-size:clamp(11px,1.15vw,14.5px);line-height:1.5}
+.tiny{font-size:clamp(9.5px,1vw,12.5px);line-height:1.45}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);padding:clamp(12px,1.8vw,24px)}
+.pill{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:clamp(10px,1.1vw,13px)}
+.pill-gold{background:var(--gold);color:var(--on-gold)}
+.pill-navy{background:var(--secondary-container);color:var(--navy)}
+.pill-red{background:var(--destructive-container);color:var(--destructive)}
+.pill-green{background:#d8f3e4;color:var(--success)}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.8vw,24px)}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.5vw,20px)}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,1.2vw,16px)}
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(16px,2.4vw,36px);align-items:center}
+
+.metric-num{font-family:var(--font-head);font-weight:800;font-size:clamp(26px,3.6vw,52px);line-height:1;letter-spacing:-0.02em}
+.chart-box{position:relative;width:100%;height:clamp(180px,34vh,320px)}
+
+table.cmp{width:100%;border-collapse:separate;border-spacing:0;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);font-size:clamp(10px,1.12vw,14px)}
+table.cmp th,table.cmp td{padding:clamp(5px,.85vw,11px) clamp(7px,1vw,14px);text-align:center;border-bottom:1px solid var(--border)}
+table.cmp tr:last-child td{border-bottom:none}
+table.cmp th{background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:600}
+table.cmp th.us{background:var(--gold);color:var(--on-gold)}
+table.cmp td:first-child{text-align:left;font-weight:600}
+table.cmp td.us{background:#fff8e1;font-weight:700;color:var(--primary)}
+
+.codebox{background:var(--navy);color:#dbe4f3;font-family:var(--font-code);font-size:clamp(9.5px,1.05vw,13px);line-height:1.6;border-radius:12px;padding:clamp(10px,1.4vw,18px);text-align:left;overflow:hidden}
+.codebox .k{color:#ffd35c}.codebox .s{color:#8fd6a9}
+
+.flow{display:flex;align-items:stretch;gap:clamp(4px,.7vw,10px)}
+.flow .step{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:clamp(8px,1.2vw,16px);text-align:center;display:flex;flex-direction:column;gap:4px;justify-content:flex-start}
+.flow .arrow{align-self:center;color:var(--gold);font-size:clamp(14px,1.8vw,24px);font-weight:800;flex:0 0 auto}
+.step .ic{font-size:clamp(16px,2vw,26px)}
+.step b{font-size:clamp(10.5px,1.15vw,14px);font-family:var(--font-head)}
+
+.check-list{list-style:none;display:flex;flex-direction:column;gap:clamp(6px,1vh,12px);text-align:left}
+.check-list li{display:flex;gap:10px;align-items:flex-start}
+.check-list .ck{flex:0 0 auto;width:clamp(18px,2vw,24px);height:clamp(18px,2vw,24px);border-radius:50%;background:var(--gold);color:var(--on-gold);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:clamp(10px,1.1vw,13px);margin-top:2px}
+
+.timeline{display:flex;gap:clamp(6px,.9vw,12px)}
+.phase{flex:1;border-radius:14px;padding:clamp(9px,1.3vw,16px);background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:5px}
+.phase .ph-n{font-family:var(--font-head);font-weight:800;font-size:clamp(11px,1.2vw,15px);color:var(--primary)}
+.phase.now{background:#fff8e1;border-color:var(--gold)}
+
+.footer-tag{position:absolute;bottom:clamp(10px,1.6vh,20px);left:0;right:0;text-align:center;font-size:clamp(9px,1vw,12px);color:var(--muted);letter-spacing:.06em}
+.slide.dark .footer-tag{color:#7e8ba1}
+
+.progress-bar{position:fixed;top:0;left:0;height:4px;background:var(--gold);transition:width .3s;z-index:1000}
+.nav-controls{position:fixed;bottom:18px;right:22px;display:flex;align-items:center;gap:12px;z-index:1000}
+.nav-btn{background:rgba(31,42,61,.85);border:none;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:15px}
+.nav-btn:hover{background:var(--navy)}
+.slide-counter{color:var(--secondary);font-size:12.5px;font-weight:600}
+
+.mascot{width:clamp(110px,15vw,210px);filter:drop-shadow(0 12px 28px rgba(31,42,61,.35))}
+.animate-stagger>*{opacity:0;animation:fadeUp .5s ease-out forwards}
+.animate-stagger>*:nth-child(1){animation-delay:.08s}.animate-stagger>*:nth-child(2){animation-delay:.18s}
+.animate-stagger>*:nth-child(3){animation-delay:.28s}.animate-stagger>*:nth-child(4){animation-delay:.38s}
+.animate-stagger>*:nth-child(5){animation-delay:.48s}.animate-stagger>*:nth-child(6){animation-delay:.58s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<div class="slide-deck">
+
+<!-- ============ SLIDE 1 · TITLE ============ -->
+<div class="slide dark active">
+  <div class="slide-content" style="align-items:center;text-align:center">
+    <div class="kicker">Vietnam Innovation Challenge 2026 · STEAM for Vietnam · EduOne Platform</div>
+    <h1 class="display">EduOne <span class="gold-text">Adaptive Learning Engine</span></h1>
+    <p class="lead" style="max-width:72%;color:#c6d0e0">Người thầy kèm 1-1 cho mọi học sinh Việt Nam — <b style="color:#ffd35c">chi phí gần bằng 0</b>.</p>
+    <img class="mascot" src="assets/idle.gif" alt="OctoCode mascot">
+    <p class="tiny" style="color:#7e8ba1">Một hệ thống · Hai đầu ra: lộ trình riêng cho từng học viên & giáo viên soạn bài nhanh gấp 20 lần</p>
+  </div>
+</div>
+
+<!-- ============ SLIDE 2 · PROBLEM ============ -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Vấn đề</div>
+    <h2 class="headline">Bài toán 40 năm chưa ai giải được ở quy mô lớn</h2>
+    <p class="small muted" style="max-width:88%"><b>Bloom's 2-sigma (1984):</b> học sinh được kèm 1-1 vượt <b>98%</b> học sinh lớp thường. Không ai giải được vì không bao giờ có đủ giáo viên — càng không có ở giáo dục miễn phí.</p>
+    <div class="grid-2 animate-stagger">
+      <div class="card" style="border-top:4px solid var(--destructive)">
+        <span class="pill pill-red">Học viên</span>
+        <div class="metric-num" style="color:var(--destructive);margin-top:8px">&gt; 50%</div>
+        <p class="small" style="margin-top:4px"><b>dropout</b> — mọi học viên học chung một lộ trình bất kể trình độ. Các em cần hỗ trợ riêng nhất chính là các em bỏ đi sớm nhất.</p>
+      </div>
+      <div class="card" style="border-top:4px solid var(--warning)">
+        <span class="pill" style="background:#fef0e0;color:var(--warning)">Giáo viên</span>
+        <div class="metric-num" style="color:var(--warning);margin-top:8px">40–50 giờ</div>
+        <p class="small" style="margin-top:4px">để soạn <b>một</b> bài học hoàn chỉnh — với vỏn vẹn <b>1 nhân sự fulltime + 10 tình nguyện viên</b>, kho nội dung không bao giờ đuổi kịp nhu cầu.</p>
+      </div>
+    </div>
+    <div class="card" style="background:var(--navy);color:#fff;text-align:center;padding:clamp(10px,1.4vw,16px)">
+      <p class="small">Ràng buộc của STEAM for Vietnam: giải <b style="color:var(--gold)">cả hai vấn đề cùng lúc</b> — và <b style="color:var(--gold)">không được tăng nhân sự</b>.</p>
+    </div>
+  </div>
+  <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
+</div>
+
+<!-- ============ SLIDE 3 · WHY NOW / MARKET ============ -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Vì sao là bây giờ</div>
+    <h2 class="headline">Thị trường bùng nổ — nhưng bỏ quên giáo dục đại chúng</h2>
+    <div class="split">
+      <div>
+        <div class="chart-box"><canvas id="marketChart"></canvas></div>
+        <p class="tiny muted" style="text-align:center;margin-top:4px">AI trong giáo dục toàn cầu (Grand View, Mordor) · EdTech Việt Nam ~1 tỷ USD (2024) → ~3 tỷ USD (2033, IMARC)</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:clamp(8px,1.2vh,14px)">
+        <div class="card"><p class="small">💸 <b>Chi phí LLM giảm</b> đủ để giáo dục miễn phí dùng được — khi đặt đúng chỗ: offline, có cache.</p></div>
+        <div class="card"><p class="small">⚖️ <b>Quy định AI minh bạch</b> khiến explainable-by-design từ "nên có" thành "bắt buộc".</p></div>
+        <div class="card"><p class="small">📚 <b>Việt Nam chuẩn hóa Tin học/STEM</b> trong chương trình phổ thông với SGK chuẩn — backbone quốc gia dựng sẵn.</p></div>
+        <div class="card" style="background:#fff8e1;border-color:var(--gold)"><p class="small"><b style="color:var(--primary)">Khoảng trống lớn nhất — và khó nhất:</b> cá nhân hóa cho giáo dục đại chúng với chi phí ≈ 0. Ai giải được ở Việt Nam sẽ có kiến trúc giải được ở mọi thị trường đang phát triển.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
+</div>
+
+<!-- ============ SLIDE 4 · SOLUTION / FLYWHEEL ============ -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Giải pháp</div>
+    <h2 class="headline">Một hệ thống, hai đầu ra — flywheel <span style="color:var(--primary)">Gap → Content</span></h2>
+    <p class="small muted">Lớp <b>hạ tầng AI cá nhân hóa</b> gắn vào EduOne qua API/webhook — không thay LMS, không thay giáo viên: <b>nhân năng lực của cả hai</b>. Không phải chatbot học tập.</p>
+    <div class="flow animate-stagger">
+      <div class="step"><div class="ic">🎓</div><b>Học & làm bài</b><span class="tiny muted">Thu learning events: đúng/sai, thời gian, hint, số lần chạy code</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="ic">🩺</div><b>Chẩn đoán</b><span class="tiny muted">Mastery từng kỹ năng real-time, phát hiện "khoảnh khắc kẹt"</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="ic">⚡</div><b>Gỡ kẹt ngay</b><span class="tiny muted">Bài chữa đúng lỗi xuất hiện lập tức, kèm lý do bằng số thật</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="ic">🗺️</div><b>Gap Dashboard</b><span class="tiny muted">Kỹ năng nhiều em kẹt mà kho thiếu → backlog tự ưu tiên theo dữ liệu</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="ic">🏭</div><b>Content Studio</b><span class="tiny muted">AI sinh draft đúng gap → người duyệt → publish → quay lại phục vụ</span></div>
+    </div>
+    <div class="grid-3">
+      <div class="card" style="text-align:center;padding:10px"><p class="small">🔍 <b>Giải thích được</b><br><span class="tiny muted">mọi đề xuất kèm lý do + số liệu thật</span></p></div>
+      <div class="card" style="text-align:center;padding:10px"><p class="small">⏱️ <b>Không bao giờ chờ</b><br><span class="tiny muted">gate luôn có bài phục vụ ngay (serve 3 bậc)</span></p></div>
+      <div class="card" style="text-align:center;padding:10px"><p class="small">👩‍🏫 <b>Người duyệt 100%</b><br><span class="tiny muted">AI sinh nháp — người quyết định publish</span></p></div>
+    </div>
+  </div>
+  <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
+</div>
+
+<!-- ============ SLIDE 5 · 3 HỌC SINH ============ -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Trải nghiệm học viên</div>
+    <h2 class="headline">Ba học sinh, ba đối xử khác nhau — <span style="color:var(--primary)">cùng một lớp</span></h2>
+    <p class="small muted">Điều lớp học truyền thống không bao giờ làm được — engine làm trên từng sự kiện học:</p>
+    <div class="grid-3 animate-stagger">
+      <div class="card" style="border-top:4px solid var(--success)">
+        <span class="pill pill-green">Minh — sai nhiều, lỗi giảm dần</span>
+        <p class="small" style="margin-top:8px">Hệ thống ghi nhận <b>learning evidence</b> cả khi chưa pass. Kẹt vòng lặp → bài chữa đúng lỗi xuất hiện <b>ngay lập tức</b>:</p>
+        <p class="tiny" style="margin-top:6px;background:var(--surface-low);border-radius:8px;padding:8px;font-style:italic">"Em sai 4/6 câu về Câu lệnh lặp while; dùng 3 gợi ý → Hoàn thành bài ôn điều kiện dừng để mở bài tiếp."</p>
+      </div>
+      <div class="card" style="border-top:4px solid var(--accent)">
+        <span class="pill pill-navy">An — pass nhanh bất thường</span>
+        <p class="small" style="margin-top:8px">Hệ thống <b>không vội tin</b>: đúng nhưng nhanh đến mức nghi đoán mò → gần như không cộng vào mastery.</p>
+        <p class="tiny muted" style="margin-top:6px"><b>Điểm số không mua được bằng đoán mò.</b> Verification quiz — bắt giải thích code trước khi công nhận — ở Phase 2.</p>
+      </div>
+      <div class="card" style="border-top:4px solid var(--tertiary)">
+        <span class="pill" style="background:var(--tertiary-container);color:var(--tertiary)">Linh — quá tải nhận thức</span>
+        <p class="small" style="margin-top:8px">Đọc chậm, nhiều gợi ý → đến gợi ý thứ 3, bài bổ trợ + giải thích trực quan xuất hiện <b>ngay trên màn hình</b> — thay vì bị đẩy đi tiếp cho đến khi bỏ học.</p>
+      </div>
+    </div>
+    <div class="card" style="background:var(--navy);color:#fff;text-align:center;padding:clamp(9px,1.3vw,15px)">
+      <p class="small">Khi AI hết cách (kẹt 3 vòng chữa) → <b style="color:var(--gold)">Teacher Intervention Case</b> đẩy toàn bộ ngữ cảnh đến giáo viên. AI biết giới hạn của mình — <b>đó là tính năng, không phải thiếu sót</b>.</p>
+    </div>
+  </div>
+  <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
+</div>
+
+<!-- ============ SLIDE 6 · CONTENT STUDIO ============ -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Trải nghiệm giáo viên</div>
+    <h2 class="headline">10 tình nguyện viên vận hành như 100</h2>
+    <div class="split">
+      <div>
+        <div class="chart-box"><canvas id="ttdChart"></canvas></div>
+        <p class="tiny muted" style="text-align:center;margin-top:4px">Time-to-draft một bài học (giờ, thang log) — đo bằng log hệ thống, không ước lượng</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:clamp(8px,1.2vh,13px)">
+        <div class="card"><p class="small">🌡️ <b>Heatmap mastery cả lớp real-time</b> — cụm học viên kẹt cùng kỹ năng hiện lên như bản đồ nhiệt → can thiệp theo cụm, không theo từng em.</p></div>
+        <div class="card"><p class="small">🎯 <b>Gap Dashboard chỉ đích danh việc cần làm:</b> "23 học viên kẹt điều kiện dừng vòng lặp, kho chưa có bài chữa tốt" → bấm <b>Generate</b>.</p></div>
+        <div class="card"><p class="small">🏭 <b>Content Studio:</b> draft grounding SGK Tin học 10, mỗi đáp án nhiễu map đúng một dạng lỗi thật; máy validate bằng cách <b>chạy code thật</b>; giáo viên duyệt. <b style="color:var(--primary)">100% nội dung qua người duyệt — không ngoại lệ.</b></p></div>
+        <div class="card" style="background:#fff8e1;border-color:var(--gold)"><p class="small">♻️ <b>Mỗi lỗ hổng chỉ trả chi phí soạn bài một lần</b> — rồi phục vụ mọi học viên kẹt cùng chỗ ở mọi cohort sau. Nội dung được đối xử như code: có test, có telemetry, có vòng đời.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
+</div>
+
+<!-- ============ SLIDE 7 · KIẾN TRÚC CHI PHÍ ============ -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Kiến trúc</div>
+    <h2 class="headline">Vì sao chi phí <span style="color:var(--primary)">gần bằng 0</span> khi scale</h2>
+    <div class="split">
+      <div style="display:flex;flex-direction:column;gap:clamp(8px,1.2vh,13px)">
+        <div class="codebox">┌─ <span class="k">Data Layer</span> ────── learning events chuẩn hóa, idempotent<br>├─ <span class="k">Reasoning Layer</span> ─ mastery + rules + gate: deterministic,<br>│&nbsp;&nbsp;&nbsp;CPU thuần, <span class="s">KHÔNG có LLM trên đường ra quyết định</span><br>└─ <span class="k">Generation Layer</span> ─ LLM sinh nháp <span class="s">offline, có cache</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;validate máy → người duyệt → publish</div>
+        <div class="grid-2">
+          <div class="card" style="text-align:center;padding:10px"><p class="tiny muted">Real-time / mỗi event</p><div class="metric-num" style="font-size:clamp(20px,2.4vw,32px);color:var(--success)">≈ 0 đồng</div><p class="tiny muted">công thức + retrieval</p></div>
+          <div class="card" style="text-align:center;padding:10px"><p class="tiny muted">Offline / bài học <b>mới</b></p><div class="metric-num" style="font-size:clamp(20px,2.4vw,32px);color:var(--primary)">1–3 call</div><p class="tiny muted">Claude API, có cache</p></div>
+        </div>
+        <p class="small muted">Đối thủ đặt LLM trên critical path, trả tiền theo từng tương tác. Chi phí của hệ thống này <b>gần như phẳng khi scale</b> — kiến trúc rẻ nhất ngành, bị ép ra đời bởi chính ràng buộc phi lợi nhuận.</p>
+      </div>
+      <div>
+        <div class="chart-box"><canvas id="costChart"></canvas></div>
+        <p class="tiny muted" style="text-align:center;margin-top:4px">Chi phí vận hành theo số học viên (minh họa kiến trúc) · 20 học viên ≈ vài chục USD/tháng — số thực đo, công khai trên cost dashboard</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
+</div>
+
+<!-- ============ SLIDE 8 · EXPLAINABLE & AN TOÀN ============ -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">AI giải thích được — không black-box</div>
+    <h2 class="headline">Mọi quyết định đều truy ngược được, đúng từng anti-pattern của đề bài</h2>
+    <div class="split">
+      <div>
+        <div class="codebox">// Recommendation Log — audit từng quyết định<br>{<br>&nbsp;&nbsp;<span class="k">"reason"</span>: <span class="s">"Sai 4/6 câu skill loop.while;<br>&nbsp;&nbsp;&nbsp;dùng 3 gợi ý → gate + bài chữa L2"</span>,<br>&nbsp;&nbsp;<span class="k">"evidence"</span>: [event_id...], <span class="k">"rule_id"</span>: <span class="s">"gate.chapter.v2"</span>,<br>&nbsp;&nbsp;<span class="k">"confidence"</span>: 0.86, <span class="k">"latency_ms"</span>: 12<br>}</div>
+        <div class="card" style="margin-top:clamp(8px,1.2vh,13px)"><p class="small">🛡️ <b>An toàn cho trẻ em by design:</b> topic filter + prompt-injection check trên input; content filter K-12 + grounding check trên output; chỉ thu learning events; hạ tầng tại Việt Nam (FPT AI Factory) cho dữ liệu học sinh thật.</p></div>
+      </div>
+      <div>
+        <ul class="check-list animate-stagger">
+          <li><span class="ck">✓</span><p class="small"><b>"Chỉ hoạt động với dữ liệu sạch"</b> → 20 hồ sơ học viên đa dạng hành vi: đoán mò, quá tải, lỗi giảm dần — engine xử lý từng kiểu.</p></li>
+          <li><span class="ck">✓</span><p class="small"><b>"Nội dung AI không qua kiểm duyệt"</b> → HITL 100% trước publish, không ngoại lệ; serve chỉ dùng pool đã duyệt.</p></li>
+          <li><span class="ck">✓</span><p class="small"><b>"Demo chỉ là mockup/slideshow"</b> → AI thật chạy phía sau, pipeline khép kín trên API thật, có verify script.</p></li>
+          <li><span class="ck">✓</span><p class="small"><b>"Phụ thuộc API trả phí cao"</b> → không LLM trên critical path; LLM chỉ offline + cache; mất mạng demo vẫn không gãy.</p></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
+</div>
+
+<!-- ============ SLIDE 9 · COMPETITOR ============ -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Cạnh tranh</div>
+    <h2 class="headline">Khoảng trống các nền tảng lớn không lấp được</h2>
+    <table class="cmp">
+      <tr><th style="text-align:left">Tiêu chí</th><th>Quizlet</th><th>Duolingo</th><th>Coursera</th><th class="us">EduOne Engine</th></tr>
+      <tr><td>Đối tượng chính</td><td>HS, sinh viên</td><td>Học ngoại ngữ</td><td>SV, người đi làm</td><td class="us">Học sinh K-12 VN</td></tr>
+      <tr><td>Lộ trình cá nhân hóa</td><td>⚠️ Đề xuất ôn tập</td><td>✅ Theo tiến độ</td><td>⚠️ Theo khóa học</td><td class="us">✅ AI theo năng lực thật</td></tr>
+      <tr><td>Phân tích điểm mạnh/yếu từng em</td><td>⚠️ Kết quả ôn tập</td><td>⚠️ Chỉ ngoại ngữ</td><td>⚠️ Theo khóa học</td><td class="us">✅ Theo môn, chủ đề, kỹ năng</td></tr>
+      <tr><td>AI tạo bài học/quiz từ tài liệu</td><td>✅ Một phần</td><td>❌ Không</td><td>⚠️ Hạn chế</td><td class="us">✅ PDF/Word/PPT + người duyệt</td></tr>
+      <tr><td>Bản địa hóa chương trình VN K-12</td><td>❌</td><td>⚠️ Không K-12 VN</td><td>❌</td><td class="us">✅ Grounding SGK chuẩn quốc gia</td></tr>
+      <tr><td>Chi phí với người học</td><td>⚠️ Freemium</td><td>⚠️ Freemium</td><td>⚠️ Trả phí</td><td class="us">✅ Miễn phí 100%</td></tr>
+    </table>
+    <p class="tiny muted">Nguồn: tài liệu công bố chính thức của Quizlet, Duolingo, Coursera (2025–2026) — chi tiết trong nghiên cứu người dùng của nhóm. Duolingo đạt 137,8 triệu MAU với DAU/MAU ~41% chứng minh mô hình học thích ứng + gamification giữ chân người học — nhưng chưa ai mang nó đến K-12 Việt Nam miễn phí.</p>
+  </div>
+  <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
+</div>
+
+<!-- ============ SLIDE 10 · TRACTION ============ -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Không phải slide — bằng chứng chạy thật</div>
+    <h2 class="headline">Kiểm chứng bằng máy, không tin lời nói</h2>
+    <div class="grid-4 animate-stagger">
+      <div class="card" style="text-align:center"><div class="metric-num" style="color:var(--success)">13/13</div><p class="small" style="margin-top:4px"><b>unit test xanh</b><br><span class="tiny muted">+ 3 verify script diễn nguyên kịch bản học viên, assert từng con số</span></p></div>
+      <div class="card" style="text-align:center"><div class="metric-num" style="color:var(--primary)">3 / 14</div><p class="small" style="margin-top:4px"><b>portal / trang</b><br><span class="tiny muted">Học viên · Giáo viên · Admin — 100% tiếng Việt, chạy trên API thật</span></p></div>
+      <div class="card" style="text-align:center"><div class="metric-num" style="color:var(--accent)">E2E</div><p class="small" style="margin-top:4px"><b>pipeline khép kín</b><br><span class="tiny muted">Generate (Claude + grounding) → validate chạy code thật → duyệt → publish → serve</span></p></div>
+      <div class="card" style="text-align:center"><div class="metric-num" style="color:var(--tertiary)">0 gãy</div><p class="small" style="margin-top:4px"><b>fallback toàn trình</b><br><span class="tiny muted">LLM lỗi hay mất mạng — demo vẫn chạy</span></p></div>
+    </div>
+    <div class="card" style="background:var(--surface-low)">
+      <p class="small"><b>Demo arc 2 phút:</b> học bài → chapter test → bị gate <i>kèm lý do bằng số thật</i> → hoàn thành bài chữa → path mở lại → (giáo viên) thấy cụm kẹt trên heatmap → Generate → Approve → học viên kế tiếp bị gate cùng skill <b>nhận ngay bài vừa publish</b> → (admin) tra log lý do của mọi đề xuất.</p>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center">
+      <span class="pill pill-navy">Engine mastery real-time: EWMA explainable + BKT (thử nghiệm)</span>
+      <span class="pill pill-gold">Repo public · verify_m1/m2/m4.sh · pytest</span>
+    </div>
+  </div>
+  <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
+</div>
+
+<!-- ============ SLIDE 11 · PILOT & METRICS ============ -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Pilot cùng EduOne</div>
+    <h2 class="headline">Đo bằng số, không đo bằng cảm giác</h2>
+    <div class="split">
+      <div style="display:flex;flex-direction:column;gap:clamp(8px,1.2vh,13px)">
+        <div class="card"><p class="small">🧪 <b>Pilot đối chứng 4 tuần</b> — 1 khóa Python theo SGK Tin học 10, 8 kỹ năng, 20 học viên: nhóm A cá nhân hóa vs nhóm B lộ trình chung. <b>Mọi metric đo bằng log, không khảo sát.</b></p></div>
+        <div class="card" style="background:#fff8e1;border-color:var(--gold)"><p class="small">⭐ <b>North Star:</b> số kỹ năng verified-mastery / học viên / tuần.</p></div>
+        <div class="card"><p class="small">🚧 <b>Guardrail:</b> tỷ lệ rời bỏ sau gate ≤ nhóm đối chứng — vượt là nới ngưỡng ngay. Gate phải giúp, không được đuổi học viên.</p></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:clamp(7px,1vh,11px)" class="animate-stagger">
+        <div class="card" style="display:flex;justify-content:space-between;align-items:center;padding:clamp(9px,1.2vw,14px)"><p class="small"><b>Completion rate</b> vs lớp đối chứng</p><span class="pill pill-gold">+15 → +25 điểm %</span></div>
+        <div class="card" style="display:flex;justify-content:space-between;align-items:center;padding:clamp(9px,1.2vw,14px)"><p class="small"><b>Hoàn thành bài bổ trợ trong 48h</b> sau gate</p><span class="pill pill-gold">≥ 70–85%</span></div>
+        <div class="card" style="display:flex;justify-content:space-between;align-items:center;padding:clamp(9px,1.2vw,14px)"><p class="small"><b>Mastery gain</b> sau mỗi vòng chữa</p><span class="pill pill-gold">≥ +0.2 / skill</span></div>
+        <div class="card" style="display:flex;justify-content:space-between;align-items:center;padding:clamp(9px,1.2vw,14px)"><p class="small"><b>Time-to-draft</b> một bài học (từ 40–50h)</p><span class="pill pill-gold">&lt; 2h → 30 phút</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
+</div>
+
+<!-- ============ SLIDE 12 · MOAT + ROADMAP ============ -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Tầm nhìn</div>
+    <h2 class="headline">Từ một lớp học đến một <span style="color:var(--primary)">hệ điều hành giáo dục</span></h2>
+    <div class="timeline animate-stagger">
+      <div class="phase now"><span class="ph-n">P1 · Prove</span><p class="tiny">MVP live + pilot đối chứng 4 tuần. Bằng chứng gate giúp chứ không đuổi học viên.</p></div>
+      <div class="phase"><span class="ph-n">P2 · Deepen</span><p class="tiny">BKT calibrate dữ liệu thật; slide/video + TTS tiếng Việt; mascot/XP. 1 lần duyệt → 3 định dạng.</p></div>
+      <div class="phase"><span class="ph-n">P3 · Scale VN</span><p class="tiny">Webhook LMS EduOne; RAG trên SGK; data residency VN. 20 → hàng chục nghìn học viên.</p></div>
+      <div class="phase"><span class="ph-n">P4 · Generate</span><p class="tiny">PDF → knowledge graph → learning path (12 cổng human review). Mở khóa học mới trong ngày.</p></div>
+      <div class="phase"><span class="ph-n">P5 · Platform</span><p class="tiny">Learning OS as a Service — API cho trường học & edtech, Đông Nam Á. Licensing nuôi lõi miễn phí.</p></div>
+    </div>
+    <div class="grid-3">
+      <div class="card" style="padding:clamp(9px,1.2vw,14px)"><p class="small">🧠 <b>Moat dữ liệu:</b> bản đồ lỗi-học-tập của học sinh VN tích lũy qua từng cohort — copy được giao diện, không copy được dữ liệu này.</p></div>
+      <div class="card" style="padding:clamp(9px,1.2vw,14px)"><p class="small">📖 <b>Moat cấu trúc:</b> "backbone SGK chuẩn + cá nhân hóa là độ lệch" nhân bản sang Toán, Lý, Hóa — và mọi quốc gia có chương trình chuẩn.</p></div>
+      <div class="card" style="padding:clamp(9px,1.2vw,14px)"><p class="small">💰 <b>Bền vững:</b> SOM: hàng nghìn học viên EduOne (CAC ≈ 0) → SAM: 17 triệu HS phổ thông VN → TAM: 41–57 tỷ USD (2030–33).</p></div>
+    </div>
+  </div>
+  <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
+</div>
+
+<!-- ============ SLIDE 13 · CLOSING ============ -->
+<div class="slide dark">
+  <div class="slide-content" style="align-items:center;text-align:center">
+    <img class="mascot" src="assets/celebrate.gif" alt="OctoCode celebrate" style="width:clamp(100px,13vw,180px)">
+    <h2 class="display" style="max-width:88%">Xây cho những học sinh mà <span class="gold-text">không ai kịp dạy riêng</span>.</h2>
+    <p class="lead" style="max-width:70%;color:#c6d0e0">Bloom's 2-sigma chờ 40 năm để có lời giải scale được. Chúng tôi bắt đầu từ 20 học viên của STEAM for Vietnam — với kiến trúc sẵn sàng cho hàng chục triệu.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+      <span class="pill pill-gold">▶ Demo live 2 phút — AI thật, không mockup</span>
+      <span class="pill" style="background:rgba(255,255,255,.12);color:#fff">Repo public + verify scripts</span>
+      <span class="pill" style="background:rgba(255,255,255,.12);color:#fff">Sẵn sàng pilot 4 tuần cùng EduOne</span>
+    </div>
+    <p class="tiny" style="color:#7e8ba1">EduOne Adaptive Learning Engine · Vietnam Innovation Challenge 2026 · STEAM for Vietnam</p>
+  </div>
+</div>
+
+</div><!-- /.slide-deck -->
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prevSlide()">←</button>
+  <span class="slide-counter"><span id="current">1</span> / <span id="total">13</span></span>
+  <button class="nav-btn" onclick="nextSlide()">→</button>
+</div>
+
+<script>
+let current=1;
+const total=document.querySelectorAll('.slide').length;
+document.getElementById('total').textContent=total;
+function showSlide(n){
+  if(n<1)n=1; if(n>total)n=total; current=n;
+  document.querySelectorAll('.slide').forEach((s,i)=>s.classList.toggle('active',i===n-1));
+  document.getElementById('current').textContent=n;
+  document.getElementById('progressBar').style.width=(n/total*100)+'%';
+}
+function nextSlide(){showSlide(current+1)}
+function prevSlide(){showSlide(current-1)}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();nextSlide()}
+  if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prevSlide()}
+});
+document.addEventListener('click',e=>{if(!e.target.closest('.nav-controls'))nextSlide()});
+showSlide(1);
+
+/* ===== Charts ===== */
+const gridC='rgba(31,42,61,.08)', tickC='#5b6470';
+Chart.defaults.font.family="'Inter',sans-serif";
+
+new Chart(document.getElementById('marketChart'),{
+  type:'bar',
+  data:{labels:['2025','2030–2033'],
+    datasets:[{label:'AI trong giáo dục (tỷ USD)',data:[7.5,49],
+      backgroundColor:['#cadaff','#ffb800'],borderRadius:10,maxBarThickness:110}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},title:{display:true,text:'7–8 tỷ USD → 41–57 tỷ USD (CAGR 26–43%)',color:'#181c1e',font:{family:'Montserrat',size:14,weight:'600'}}},
+    scales:{x:{grid:{display:false},ticks:{color:tickC,font:{weight:'600'}}},
+      y:{grid:{color:gridC},ticks:{color:tickC,callback:v=>'$'+v+'B'}}}}
+});
+
+new Chart(document.getElementById('ttdChart'),{
+  type:'bar',
+  data:{labels:['Trước đây','Với Content Studio','Đích Phase 2'],
+    datasets:[{data:[45,2,0.5],
+      backgroundColor:['#ba1a1a','#ffb800','#1b7f4d'],borderRadius:10,maxBarThickness:90}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      title:{display:true,text:'40–50 giờ → dưới 2 giờ → 30 phút',color:'#181c1e',font:{family:'Montserrat',size:14,weight:'600'}},
+      tooltip:{callbacks:{label:c=>c.parsed.y+' giờ'}}},
+    scales:{x:{grid:{display:false},ticks:{color:tickC,font:{weight:'600'}}},
+      y:{type:'logarithmic',min:0.1,max:100,grid:{color:gridC},
+        ticks:{color:tickC,callback:v=>[0.5,2,10,45].includes(v)?v+'h':null}}}}
+});
+
+new Chart(document.getElementById('costChart'),{
+  type:'line',
+  data:{labels:['20','200','2.000','20.000','200.000'],
+    datasets:[
+      {label:'LLM trên critical path (đối thủ)',data:[1,10,100,1000,10000],
+        borderColor:'#ba1a1a',backgroundColor:'rgba(186,26,26,.06)',borderWidth:3,fill:true,tension:.35,pointRadius:3},
+      {label:'EduOne Engine (LLM offline + cache)',data:[1,1.4,2.2,3.5,6],
+        borderColor:'#1b7f4d',backgroundColor:'rgba(27,127,77,.10)',borderWidth:3,fill:true,tension:.35,pointRadius:3}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{color:tickC,boxWidth:14,font:{size:11}}},
+      title:{display:true,text:'Chi phí gần như phẳng khi scale',color:'#181c1e',font:{family:'Montserrat',size:14,weight:'600'}}},
+    scales:{x:{title:{display:true,text:'Số học viên',color:tickC,font:{size:11}},grid:{display:false},ticks:{color:tickC}},
+      y:{type:'logarithmic',grid:{color:gridC},ticks:{display:false}}}}
+});
+</script>
+</body>
+</html>

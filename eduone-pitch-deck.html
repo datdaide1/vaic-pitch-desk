@@ -219,40 +219,46 @@ table.cmp td.us{background:#fff8e1;font-weight:700;color:var(--primary)}
 <div class="slide">
   <div class="slide-content">
     <div class="kicker">Bước 1 · Đo năng lực thật</div>
-    <h2 class="headline">Hai mô hình đo năng lực — <span style="color:var(--primary)">một chuẩn bằng chứng</span></h2>
+    <h2 class="headline">Hai mô hình cùng đo: <span style="color:var(--primary)">em đã thật sự nắm bài chưa?</span></h2>
     <div class="grid-2">
       <div class="card" style="border-top:4px solid var(--success)">
         <span class="pill pill-green">MVP hiện tại · EWMA</span>
-        <p class="small" style="margin-top:8px"><b>Phản ứng ngay trên từng lần học</b> — đủ nhẹ để chạy real-time và không cần lịch sử dài.</p>
+        <p class="small" style="margin-top:8px"><b>Hiểu trong một câu:</b> điểm mới giữ phần lớn lịch sử, rồi điều chỉnh bằng bằng chứng vừa quan sát.</p>
         <div style="margin-top:8px;background:var(--surface-low);border-radius:12px;padding:clamp(10px,1.4vw,16px);text-align:center">
-          <p class="tiny muted" style="letter-spacing:.08em;font-weight:700">ĐIỂM BẰNG CHỨNG</p>
-          <div style="font-family:Georgia,serif;font-size:clamp(22px,2.2vw,34px);font-weight:700;color:var(--navy);margin:5px 0">Sₜ = 0,4C + 0,2A + 0,2T + 0,2H</div>
-          <p class="tiny muted">C: độ chính xác · A: số lần thử · T: độ tin cậy thời gian · H: mức tự lập</p>
-          <div style="height:1px;background:var(--outline);margin:10px 0"></div>
-          <p class="tiny muted" style="letter-spacing:.08em;font-weight:700">CẬP NHẬT NĂNG LỰC</p>
-          <div style="font-family:Georgia,serif;font-size:clamp(21px,2vw,31px);font-weight:700;color:var(--primary);margin-top:5px">Mₜ = 0,7Mₜ₋₁ + 0,3Sₜ</div>
+          <p class="tiny muted" style="letter-spacing:.08em;font-weight:700">BẰNG CHỨNG MỚI GỒM</p>
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:5px;margin:7px 0 11px">
+            <div style="background:#dff3e7;border-radius:8px;padding:8px 4px"><b class="small">40%</b><br><span class="tiny">Đúng / sai</span></div>
+            <div style="background:#e6edfa;border-radius:8px;padding:8px 4px"><b class="small">20%</b><br><span class="tiny">Lần thử</span></div>
+            <div style="background:#fff0c2;border-radius:8px;padding:8px 4px"><b class="small">20%</b><br><span class="tiny">Thời gian</span></div>
+            <div style="background:#efe5fb;border-radius:8px;padding:8px 4px"><b class="small">20%</b><br><span class="tiny">Gợi ý</span></div>
+          </div>
+          <div style="font-size:clamp(20px,1.9vw,29px);font-weight:800;color:var(--navy)"><span style="color:var(--success)">70% lịch sử</span> + <span style="color:var(--primary)">30% bằng chứng mới</span></div>
+          <p class="tiny muted" style="margin-top:8px">Ký hiệu toán:</p>
+          <div style="font-family:'Cambria Math','STIX Two Math','Times New Roman',serif;font-size:clamp(20px,1.8vw,28px);font-weight:600;letter-spacing:.01em;color:var(--navy);margin-top:2px">Mₜ = 0,7Mₜ₋₁ + 0,3Sₜ</div>
         </div>
-        <p class="tiny muted" style="margin-top:8px">Chống đoán mò · ghi nhận tiến bộ dù chưa pass · cold-start không phạt thời gian.</p>
+        <p class="tiny muted" style="margin-top:8px">Ý nghĩa: chống đoán mò, vẫn ghi nhận tiến bộ dù học viên chưa pass.</p>
       </div>
       <div class="card" style="border-top:4px solid var(--gold)">
         <span class="pill pill-gold">Pilot · BKT sau hiệu chỉnh</span>
-        <p class="small" style="margin-top:8px"><b>Học từ cả chuỗi đúng–sai</b> — ước lượng xác suất đã nắm từng kỹ năng khi có đủ dữ liệu pilot.</p>
+        <p class="small" style="margin-top:8px"><b>Hiểu trong một câu:</b> mỗi câu trả lời làm hệ thống tăng hoặc giảm niềm tin rằng học viên đã nắm kỹ năng.</p>
         <div style="margin-top:8px;background:#fff8e1;border-radius:12px;padding:clamp(10px,1.4vw,16px);text-align:center">
-          <p class="tiny muted" style="letter-spacing:.08em;font-weight:700">CẬP NHẬT THEO QUAN SÁT</p>
-          <div style="display:flex;align-items:center;justify-content:center;gap:8px;font-family:Georgia,serif;font-size:clamp(14px,1.35vw,21px);font-weight:700;color:var(--navy);margin:6px 0">
-            <span>P(L|O) =</span>
-            <span style="display:inline-flex;flex-direction:column;align-items:center;line-height:1.25"><span style="border-bottom:2px solid var(--navy);padding:0 6px 4px">P(O|L)P(L)</span><span style="padding-top:4px">P(O|L)P(L)+P(O|¬L)(1−P(L))</span></span>
+          <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:6px;margin-bottom:10px">
+            <div style="background:#fff;border-radius:9px;padding:9px 5px"><b class="small">Niềm tin trước</b><br><span class="tiny muted">Em đã biết bao nhiêu?</span></div>
+            <span style="color:var(--primary);font-weight:800">→</span>
+            <div style="background:#fff;border-radius:9px;padding:9px 5px"><b class="small">Đúng / sai mới</b><br><span class="tiny muted">Có thể đoán hoặc lỡ sai</span></div>
+            <span style="color:var(--primary);font-weight:800">→</span>
+            <div style="background:#fff;border-radius:9px;padding:9px 5px"><b class="small">Niềm tin sau</b><br><span class="tiny muted">Tăng hoặc giảm</span></div>
           </div>
-          <p class="tiny muted">P(đúng|đã biết) = 1−S · P(đúng|chưa biết) = G</p>
-          <div style="height:1px;background:#e3c56c;margin:10px 0"></div>
-          <p class="tiny muted" style="letter-spacing:.08em;font-weight:700">SAU MỘT CƠ HỘI HỌC</p>
-          <div style="font-family:Georgia,serif;font-size:clamp(17px,1.7vw,27px);font-weight:700;color:var(--primary);margin-top:5px">P(Lₜ₊₁) = P(L|Oₜ) + [1−P(L|Oₜ)]P(T)</div>
+          <p class="small" style="background:rgba(255,255,255,.7);border-radius:8px;padding:7px"><b>Đúng chưa chắc đã biết</b> vì có thể đoán; <b>sai chưa chắc chưa biết</b> vì có thể sơ suất.</p>
+          <p class="tiny muted" style="margin-top:8px">Ký hiệu toán:</p>
+          <div style="font-family:'Cambria Math','STIX Two Math','Times New Roman',serif;font-size:clamp(19px,1.65vw,26px);font-weight:600;letter-spacing:.01em;color:var(--navy);margin-top:2px">P(L|O) ∝ P(O|L) × P(L)</div>
+          <div style="font-family:'Cambria Math','STIX Two Math','Times New Roman',serif;font-size:clamp(17px,1.45vw,23px);font-weight:600;letter-spacing:.01em;color:var(--primary);margin-top:5px">P(Lₜ₊₁) = P(L|Oₜ) + [1−P(L|Oₜ)]P(T)</div>
         </div>
-        <p class="tiny muted" style="margin-top:8px"><b>L₀</b>: nền tảng · <b>T</b>: khả năng học · <b>S</b>: biết nhưng sai · <b>G</b>: chưa biết nhưng đoán đúng.</p>
+        <p class="tiny muted" style="margin-top:8px">BKT học từ chuỗi hành vi; chỉ dùng sau khi pilot xác định được tỷ lệ đoán đúng và sơ suất thật.</p>
       </div>
     </div>
     <div class="card" style="background:var(--navy);color:#fff;text-align:center;padding:clamp(8px,1.1vw,13px)">
-      <p class="small"><b style="color:var(--gold)">Không chọn điểm “đẹp hơn”.</b> Mỗi cohort dùng một mô hình cố định; pilot so sánh khả năng dự báo tiến bộ để quyết định có thay EWMA bằng BKT hay không.</p>
+      <p class="small"><b style="color:var(--gold)">MVP dùng EWMA vì rõ và chạy được ngay.</b> BKT chỉ thay thế nếu dữ liệu pilot chứng minh nó dự báo tiến bộ tốt hơn.</p>
     </div>
   </div>
   <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>

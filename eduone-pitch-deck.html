@@ -219,23 +219,40 @@ table.cmp td.us{background:#fff8e1;font-weight:700;color:var(--primary)}
 <div class="slide">
   <div class="slide-content">
     <div class="kicker">Bước 1 · Đo năng lực thật</div>
-    <h2 class="headline">Hai engine mastery — minh bạch từ <span style="color:var(--primary)">MVP đến pilot</span></h2>
+    <h2 class="headline">Hai mô hình đo năng lực — <span style="color:var(--primary)">một chuẩn bằng chứng</span></h2>
     <div class="grid-2">
       <div class="card" style="border-top:4px solid var(--success)">
-        <span class="pill pill-green">MVP hiện tại · EWMA mặc định</span>
-        <p class="small" style="margin-top:8px"><b>Chấm cách học trên từng submission</b> — chạy real-time, không cần dữ liệu lịch sử để khởi động.</p>
-        <div class="codebox" style="margin-top:8px">score = <span class="k">0.4</span>·correctness + <span class="k">0.2</span>·attempt<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="k">0.2</span>·time + <span class="k">0.2</span>·hint<br><br>correctness = tỉ lệ đúng theo skill<br>attempt&nbsp;&nbsp;&nbsp;&nbsp; = 1/số_lần_thử<br>time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = <span class="s">0.3 nếu nhanh bất thường</span><br>hint&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 1 − 0.25·số_gợi_ý<br><br>mastery_new = <span class="k">0.7</span>·mastery_old + <span class="k">0.3</span>·score</div>
-        <p class="tiny muted" style="margin-top:8px">Chống đoán mò · ghi nhận lỗi giảm dần dù chưa pass · cold-start chưa đủ 5 mẫu thì không phạt thời gian.</p>
+        <span class="pill pill-green">MVP hiện tại · EWMA</span>
+        <p class="small" style="margin-top:8px"><b>Phản ứng ngay trên từng lần học</b> — đủ nhẹ để chạy real-time và không cần lịch sử dài.</p>
+        <div style="margin-top:8px;background:var(--surface-low);border-radius:12px;padding:clamp(10px,1.4vw,16px);text-align:center">
+          <p class="tiny muted" style="letter-spacing:.08em;font-weight:700">ĐIỂM BẰNG CHỨNG</p>
+          <div style="font-family:Georgia,serif;font-size:clamp(22px,2.2vw,34px);font-weight:700;color:var(--navy);margin:5px 0">Sₜ = 0,4C + 0,2A + 0,2T + 0,2H</div>
+          <p class="tiny muted">C: độ chính xác · A: số lần thử · T: độ tin cậy thời gian · H: mức tự lập</p>
+          <div style="height:1px;background:var(--outline);margin:10px 0"></div>
+          <p class="tiny muted" style="letter-spacing:.08em;font-weight:700">CẬP NHẬT NĂNG LỰC</p>
+          <div style="font-family:Georgia,serif;font-size:clamp(21px,2vw,31px);font-weight:700;color:var(--primary);margin-top:5px">Mₜ = 0,7Mₜ₋₁ + 0,3Sₜ</div>
+        </div>
+        <p class="tiny muted" style="margin-top:8px">Chống đoán mò · ghi nhận tiến bộ dù chưa pass · cold-start không phạt thời gian.</p>
       </div>
       <div class="card" style="border-top:4px solid var(--gold)">
-        <span class="pill pill-gold">Pilot · BKT sau calibration</span>
-        <p class="small" style="margin-top:8px"><b>Cập nhật xác suất đã nắm một skill</b> từ chuỗi đúng/sai — dùng khi đã có đủ dữ liệu thật để calibrate.</p>
-        <div class="codebox" style="margin-top:8px">p = P(L<sub>n</sub>)&nbsp;&nbsp;<span class="s">// xác suất đã nắm skill</span><br><br>post(correct) = p·(1−slip)<br>&nbsp;&nbsp;/ [p·(1−slip) + (1−p)·guess]<br><br>post(wrong) = p·slip<br>&nbsp;&nbsp;/ [p·slip + (1−p)·(1−guess)]<br><br>P(L<sub>n+1</sub>) = post + (1−post)·P(T)</div>
-        <p class="tiny muted" style="margin-top:8px"><b>4 tham số:</b> P(L₀) ban đầu · P(T) học thêm · P(slip) biết nhưng trả lời sai · P(guess) chưa biết nhưng đoán đúng.</p>
+        <span class="pill pill-gold">Pilot · BKT sau hiệu chỉnh</span>
+        <p class="small" style="margin-top:8px"><b>Học từ cả chuỗi đúng–sai</b> — ước lượng xác suất đã nắm từng kỹ năng khi có đủ dữ liệu pilot.</p>
+        <div style="margin-top:8px;background:#fff8e1;border-radius:12px;padding:clamp(10px,1.4vw,16px);text-align:center">
+          <p class="tiny muted" style="letter-spacing:.08em;font-weight:700">CẬP NHẬT THEO QUAN SÁT</p>
+          <div style="display:flex;align-items:center;justify-content:center;gap:8px;font-family:Georgia,serif;font-size:clamp(14px,1.35vw,21px);font-weight:700;color:var(--navy);margin:6px 0">
+            <span>P(L|O) =</span>
+            <span style="display:inline-flex;flex-direction:column;align-items:center;line-height:1.25"><span style="border-bottom:2px solid var(--navy);padding:0 6px 4px">P(O|L)P(L)</span><span style="padding-top:4px">P(O|L)P(L)+P(O|¬L)(1−P(L))</span></span>
+          </div>
+          <p class="tiny muted">P(đúng|đã biết) = 1−S · P(đúng|chưa biết) = G</p>
+          <div style="height:1px;background:#e3c56c;margin:10px 0"></div>
+          <p class="tiny muted" style="letter-spacing:.08em;font-weight:700">SAU MỘT CƠ HỘI HỌC</p>
+          <div style="font-family:Georgia,serif;font-size:clamp(17px,1.7vw,27px);font-weight:700;color:var(--primary);margin-top:5px">P(Lₜ₊₁) = P(L|Oₜ) + [1−P(L|Oₜ)]P(T)</div>
+        </div>
+        <p class="tiny muted" style="margin-top:8px"><b>L₀</b>: nền tảng · <b>T</b>: khả năng học · <b>S</b>: biết nhưng sai · <b>G</b>: chưa biết nhưng đoán đúng.</p>
       </div>
     </div>
     <div class="card" style="background:var(--navy);color:#fff;text-align:center;padding:clamp(8px,1.1vw,13px)">
-      <p class="small"><b style="color:var(--gold)">Không chọn điểm “đẹp hơn”.</b> Mỗi cohort khóa một engine/version; Recommendation Log lưu tham số + evidence + lý do. Pilot mới quyết định BKT có dự báo tốt hơn EWMA hay không.</p>
+      <p class="small"><b style="color:var(--gold)">Không chọn điểm “đẹp hơn”.</b> Mỗi cohort dùng một mô hình cố định; pilot so sánh khả năng dự báo tiến bộ để quyết định có thay EWMA bằng BKT hay không.</p>
     </div>
   </div>
   <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
@@ -248,7 +265,14 @@ table.cmp td.us{background:#fff8e1;font-weight:700;color:var(--primary)}
     <h2 class="headline">Mỗi tín hiệu học tập dẫn đến một hành động <span style="color:var(--primary)">giải thích được</span></h2>
     <div class="split">
       <div style="display:flex;flex-direction:column;gap:clamp(8px,1.2vh,13px)">
-        <div class="codebox">// Decision rules — hàm thuần, deterministic, &lt;20ms<br><span class="k">R1</span>: ≥3 hint trong 1 lesson&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ banner bài bổ trợ<br><span class="k">R2</span>: chậm &gt;2× median lớp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ banner visualize<br><span class="k">R3</span>: sai ≥3/5 item cùng skill&nbsp;&nbsp;&nbsp;→ remedial / gate<br><span class="k">R7</span>: chapter_test dưới ngưỡng&nbsp;&nbsp;&nbsp;→ gate cuối chương<br><br><span class="s">// Ưu tiên R3/R7 &gt; R1 &gt; R2 — không rule nào gọi LLM</span></div>
+        <div class="card" style="padding:clamp(10px,1.4vw,16px)">
+          <p class="tiny muted" style="letter-spacing:.08em;font-weight:700;margin-bottom:5px">TÍN HIỆU HỌC TẬP → PHẢN HỒI</p>
+          <div style="display:grid;grid-template-columns:1fr auto 1.25fr;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--outline)"><span class="small"><b>≥ 3 gợi ý</b></span><span style="color:var(--primary);font-weight:800">→</span><span class="small">Bài bổ trợ ngắn</span></div>
+          <div style="display:grid;grid-template-columns:1fr auto 1.25fr;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--outline)"><span class="small"><b>&gt; 2× thời gian lớp</b></span><span style="color:var(--primary);font-weight:800">→</span><span class="small">Giải thích trực quan</span></div>
+          <div style="display:grid;grid-template-columns:1fr auto 1.25fr;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--outline)"><span class="small"><b>Sai ≥ 3/5 cùng skill</b></span><span style="color:var(--primary);font-weight:800">→</span><span class="small">Bài chữa đúng lỗi</span></div>
+          <div style="display:grid;grid-template-columns:1fr auto 1.25fr;gap:8px;align-items:center;padding:7px 0"><span class="small"><b>Cuối chương dưới ngưỡng</b></span><span style="color:var(--primary);font-weight:800">→</span><span class="small">Gate + học lại</span></div>
+          <p class="tiny muted" style="margin-top:6px">Ưu tiên lỗi nghiêm trọng trước; mọi quyết định hoàn tất dưới 20 ms và không gọi LLM.</p>
+        </div>
         <div class="card"><p class="small">📏 <b>Can thiệp đúng mức:</b> score ≥ 0.7 → đi tiếp · 0.4–0.7 → gợi ý bài ngắn, không bắt buộc · &lt; 0.4 → gate + bài chữa dài tương xứng. Checkpoint giữa bài không phạt sai.</p></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:clamp(8px,1.2vh,13px)">
@@ -289,7 +313,13 @@ table.cmp td.us{background:#fff8e1;font-weight:700;color:var(--primary)}
     <h2 class="headline">Vì sao chi phí <span style="color:var(--primary)">gần bằng 0</span> khi scale</h2>
     <div class="split">
       <div style="display:flex;flex-direction:column;gap:clamp(8px,1.2vh,13px)">
-        <div class="codebox">┌─ <span class="k">Data Layer</span> ────── learning events chuẩn hóa, idempotent<br>├─ <span class="k">Reasoning Layer</span> ─ mastery + rules + gate: deterministic,<br>│&nbsp;&nbsp;&nbsp;CPU thuần, <span class="s">KHÔNG có LLM trên đường ra quyết định</span><br>└─ <span class="k">Generation Layer</span> ─ LLM sinh nháp <span class="s">offline, có cache</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;validate máy → người duyệt → publish</div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="card" style="padding:8px 12px;border-left:4px solid var(--accent)"><p class="small"><b>1 · Dữ liệu</b> — chuẩn hóa mọi sự kiện học tập thành một dòng bằng chứng đáng tin cậy.</p></div>
+          <div style="text-align:center;color:var(--primary);font-weight:800;line-height:1">↓</div>
+          <div class="card" style="padding:8px 12px;border-left:4px solid var(--success)"><p class="small"><b>2 · Quyết định</b> — mastery + rules + gate chạy bằng CPU; <b>không có LLM</b> trên đường ra quyết định.</p></div>
+          <div style="text-align:center;color:var(--primary);font-weight:800;line-height:1">↓</div>
+          <div class="card" style="padding:8px 12px;border-left:4px solid var(--gold)"><p class="small"><b>3 · Tạo nội dung</b> — LLM sinh nháp offline, máy kiểm tra, người duyệt rồi mới publish.</p></div>
+        </div>
         <div class="grid-2">
           <div class="card" style="text-align:center;padding:10px"><p class="tiny muted">Real-time / mỗi event</p><div class="metric-num" style="font-size:clamp(20px,2.4vw,32px);color:var(--success)">≈ 0 đồng</div><p class="tiny muted">công thức + retrieval</p></div>
           <div class="card" style="text-align:center;padding:10px"><p class="tiny muted">Offline / bài học <b>mới</b></p><div class="metric-num" style="font-size:clamp(20px,2.4vw,32px);color:var(--primary)">1–3 call</div><p class="tiny muted">Claude API, có cache</p></div>
@@ -312,7 +342,17 @@ table.cmp td.us{background:#fff8e1;font-weight:700;color:var(--primary)}
     <h2 class="headline">Mọi quyết định đều truy ngược được, đúng từng anti-pattern của đề bài</h2>
     <div class="split">
       <div>
-        <div class="codebox">// Recommendation Log — audit từng quyết định<br>{<br>&nbsp;&nbsp;<span class="k">"reason"</span>: <span class="s">"Sai 4/6 câu skill loop.while;<br>&nbsp;&nbsp;&nbsp;dùng 3 gợi ý → gate + bài chữa L2"</span>,<br>&nbsp;&nbsp;<span class="k">"evidence"</span>: [event_id...], <span class="k">"rule_id"</span>: <span class="s">"gate.chapter.v2"</span>,<br>&nbsp;&nbsp;<span class="k">"confidence"</span>: 0.86, <span class="k">"latency_ms"</span>: 12<br>}</div>
+        <div class="card" style="background:#fff8e1;border-color:var(--gold)">
+          <span class="pill pill-gold">Dấu vết quyết định</span>
+          <p class="small" style="margin-top:8px;font-style:italic">“Em sai 4/6 câu về vòng lặp while và dùng 3 gợi ý → hoàn thành bài chữa trước khi mở bài tiếp.”</p>
+          <div class="grid-2" style="margin-top:9px;gap:7px">
+            <div class="card" style="padding:8px"><p class="tiny muted">Bằng chứng</p><p class="small"><b>4/6 sai · 3 gợi ý</b></p></div>
+            <div class="card" style="padding:8px"><p class="tiny muted">Quy tắc</p><p class="small"><b>Gate cuối chương</b></p></div>
+            <div class="card" style="padding:8px"><p class="tiny muted">Độ tin cậy</p><p class="small"><b>86%</b></p></div>
+            <div class="card" style="padding:8px"><p class="tiny muted">Thời gian phản hồi</p><p class="small"><b>12 ms</b></p></div>
+          </div>
+          <p class="tiny muted" style="margin-top:7px">Học viên thấy lý do; giáo viên truy ngược được bằng chứng và quy tắc đứng sau.</p>
+        </div>
         <div class="card" style="margin-top:clamp(8px,1.2vh,13px)"><p class="small">🛡️ <b>An toàn cho trẻ em by design:</b> topic filter + prompt-injection check trên input; content filter K-12 + grounding check trên output; chỉ thu learning events; hạ tầng tại Việt Nam (FPT AI Factory) cho dữ liệu học sinh thật.</p></div>
       </div>
       <div>

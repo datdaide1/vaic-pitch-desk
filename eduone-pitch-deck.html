@@ -219,20 +219,23 @@ table.cmp td.us{background:#fff8e1;font-weight:700;color:var(--primary)}
 <div class="slide">
   <div class="slide-content">
     <div class="kicker">Bước 1 · Đo năng lực thật</div>
-    <h2 class="headline">Engine không chỉ hỏi đúng hay sai — nó đo <span style="color:var(--primary)">cách học</span></h2>
-    <div class="split">
-      <div>
-        <div class="codebox">// Mỗi submission trở thành một tín hiệu học tập giải thích được<br>s = <span class="k">0.4</span>·correctness + <span class="k">0.2</span>·attempt + <span class="k">0.2</span>·time + <span class="k">0.2</span>·hint<br><br>&nbsp;&nbsp;correctness = tỉ lệ đúng các item thuộc skill<br>&nbsp;&nbsp;attempt&nbsp;&nbsp;&nbsp;&nbsp; = 1/số_lần_thử&nbsp;&nbsp;<span class="s">(lần 1 → 1.0, lần 2 → 0.5)</span><br>&nbsp;&nbsp;time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = <span class="s">0.3 nếu nhanh bất thường — nghi đoán mò</span><br>&nbsp;&nbsp;hint&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 1 − 0.25·số_gợi_ý&nbsp;&nbsp;<span class="s">(floor 0)</span><br><br>mastery_new = <span class="k">0.7</span>·mastery_old + <span class="k">0.3</span>·s&nbsp;&nbsp;<span class="s">// EWMA</span></div>
-        <p class="tiny muted" style="margin-top:8px">Cold-start: chưa đủ 5 mẫu median lớp → không phạt time_factor. Trend so với 5 submission gần nhất (up / flat / down).</p>
+    <h2 class="headline">Hai engine mastery — minh bạch từ <span style="color:var(--primary)">MVP đến pilot</span></h2>
+    <div class="grid-2">
+      <div class="card" style="border-top:4px solid var(--success)">
+        <span class="pill pill-green">MVP hiện tại · EWMA mặc định</span>
+        <p class="small" style="margin-top:8px"><b>Chấm cách học trên từng submission</b> — chạy real-time, không cần dữ liệu lịch sử để khởi động.</p>
+        <div class="codebox" style="margin-top:8px">score = <span class="k">0.4</span>·correctness + <span class="k">0.2</span>·attempt<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="k">0.2</span>·time + <span class="k">0.2</span>·hint<br><br>correctness = tỉ lệ đúng theo skill<br>attempt&nbsp;&nbsp;&nbsp;&nbsp; = 1/số_lần_thử<br>time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = <span class="s">0.3 nếu nhanh bất thường</span><br>hint&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 1 − 0.25·số_gợi_ý<br><br>mastery_new = <span class="k">0.7</span>·mastery_old + <span class="k">0.3</span>·score</div>
+        <p class="tiny muted" style="margin-top:8px">Chống đoán mò · ghi nhận lỗi giảm dần dù chưa pass · cold-start chưa đủ 5 mẫu thì không phạt thời gian.</p>
       </div>
-      <div>
-        <ul class="check-list animate-stagger">
-          <li><span class="ck">✓</span><p class="small"><b>Nhận ra Minh đang học thật:</b> lỗi giảm dần qua các lần chạy code vẫn được ghi nhận, kể cả khi chưa pass.</p></li>
-          <li><span class="ck">✓</span><p class="small"><b>Không để An “mua” mastery bằng đoán mò:</b> đúng nhưng nhanh bất thường → time_factor 0.3, gần như không cộng điểm.</p></li>
-          <li><span class="ck">✓</span><p class="small"><b>Thấy Linh cần giảm tải:</b> nhiều hint và thời gian dài là tín hiệu để đổi cách giải thích, không phải lý do để bỏ em lại.</p></li>
-          <li><span class="ck">✓</span><p class="small"><b>Không black-box:</b> mỗi con số trên UI truy ngược được về event + công thức; BKT chỉ bật sau khi được calibrate bằng dữ liệu pilot.</p></li>
-        </ul>
+      <div class="card" style="border-top:4px solid var(--gold)">
+        <span class="pill pill-gold">Pilot · BKT sau calibration</span>
+        <p class="small" style="margin-top:8px"><b>Cập nhật xác suất đã nắm một skill</b> từ chuỗi đúng/sai — dùng khi đã có đủ dữ liệu thật để calibrate.</p>
+        <div class="codebox" style="margin-top:8px">p = P(L<sub>n</sub>)&nbsp;&nbsp;<span class="s">// xác suất đã nắm skill</span><br><br>post(correct) = p·(1−slip)<br>&nbsp;&nbsp;/ [p·(1−slip) + (1−p)·guess]<br><br>post(wrong) = p·slip<br>&nbsp;&nbsp;/ [p·slip + (1−p)·(1−guess)]<br><br>P(L<sub>n+1</sub>) = post + (1−post)·P(T)</div>
+        <p class="tiny muted" style="margin-top:8px"><b>4 tham số:</b> P(L₀) ban đầu · P(T) học thêm · P(slip) biết nhưng trả lời sai · P(guess) chưa biết nhưng đoán đúng.</p>
       </div>
+    </div>
+    <div class="card" style="background:var(--navy);color:#fff;text-align:center;padding:clamp(8px,1.1vw,13px)">
+      <p class="small"><b style="color:var(--gold)">Không chọn điểm “đẹp hơn”.</b> Mỗi cohort khóa một engine/version; Recommendation Log lưu tham số + evidence + lý do. Pilot mới quyết định BKT có dự báo tốt hơn EWMA hay không.</p>
     </div>
   </div>
   <div class="footer-tag">EduOne Adaptive Learning Engine · VAIC 2026</div>
